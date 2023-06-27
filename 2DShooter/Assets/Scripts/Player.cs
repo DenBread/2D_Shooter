@@ -10,8 +10,11 @@ public class Player : MonoBehaviour
     // здоровье
 
     [SerializeField] private float _speedMove;
+    [SerializeField] private float _speedUp;
     [SerializeField] private Transform _pointShoot;
     [SerializeField] private GameObject _bulletPrefabs;
+    private GameObject _bullet;
+
     private Rigidbody2D _rb;
 
     private void Start()
@@ -35,7 +38,7 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _rb.AddForce(new Vector2(0, 300f));
+            _rb.AddForce(new Vector2(0, _speedUp), ForceMode2D.Impulse);
         }
     }
 
@@ -53,10 +56,12 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetMouseButtonDown(0))
         {
             Debug.Log("Shoot");
-            Instantiate(_bulletPrefabs, _pointShoot.transform.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            _bullet = Instantiate(_bulletPrefabs, _pointShoot.transform.position, Quaternion.Euler(transform.rotation.eulerAngles));
         }
     }
+
+    
 }
